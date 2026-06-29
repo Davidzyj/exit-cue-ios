@@ -48,7 +48,7 @@
 2. Select System.
    - Expected: App infers from preferred languages and falls back to English.
 3. Check CFBundleDisplayName localizations.
-   - Expected: `Exit Cue`, `安心离场`, and `安心エグジット` exist in `InfoPlist.strings`.
+   - Expected: `Exit Cue: Safe Timer`, `安心离场`, and `安心エグジット` exist in `InfoPlist.strings`.
 
 ## Readability and dark mode
 
