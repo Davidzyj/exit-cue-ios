@@ -2,7 +2,7 @@
 
 ## Product boundary
 
-Exit Cue helps users set a private timed cue that looks like a call-inspired reminder inside the app. It does not place or receive real calls, does not use CallKit, does not copy the iOS Phone app UI, and does not impersonate carriers, phone numbers, FaceTime, or third-party calling services.
+Exit Cue: Safe Timer helps users set a private timed cue that looks like a call-inspired reminder inside the app. It does not place or receive real calls, does not use CallKit, does not copy the iOS Phone app UI, and does not impersonate carriers, phone numbers, FaceTime, or third-party calling services.
 
 ## Path 1 - Start a timed exit cue
 
