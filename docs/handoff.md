@@ -2,7 +2,7 @@
 
 ## Project summary
 
-Exit Cue is a native SwiftUI iPhone app for local timed call-style safety reminders. It is intentionally framed as a safe exit reminder, not a fake phone call utility.
+Exit Cue: Safe Timer is a native SwiftUI iPhone app for local timed call-style safety reminders. It is intentionally framed as a safe exit reminder, not a fake phone call utility.
 
 ## Key identifiers
 
