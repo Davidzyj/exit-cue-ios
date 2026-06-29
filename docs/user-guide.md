@@ -1,10 +1,10 @@
-# Exit Cue User Guide
+# Exit Cue: Safe Timer User Guide
 
 ## What the app does
 
-Exit Cue is a local iPhone app for setting timed call-style reminders. It is intended for moments where a user wants a calm, private prompt to leave an uncomfortable date, meeting, or social setting.
+Exit Cue: Safe Timer is a local iPhone app for setting timed call-style reminders. It is intended for moments where a user wants a calm, private prompt to leave an uncomfortable date, meeting, or social setting.
 
-Exit Cue does not make real calls, receive calls, use CallKit, or copy the iOS Phone app.
+Exit Cue: Safe Timer does not make real calls, receive calls, use CallKit, or copy the iOS Phone app.
 
 ## Start a cue
 
@@ -56,4 +56,3 @@ The settings screen does not show bundle ID, raw URLs, or the support email addr
 ## Privacy
 
 No account is required. No backend is used. No analytics, ads, or tracking SDKs are included. Local app data stays on the device unless the user deletes the app or clears history/custom profiles.
-
