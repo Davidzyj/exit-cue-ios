@@ -2,7 +2,7 @@
 
 ## App Record
 
-- App name: Exit Cue
+- App name: Exit Cue: Safe Timer
 - Chinese display name: 安心离场
 - Japanese display name: 安心エグジット
 - Bundle ID: `com.zhouyajie.exitcue`
@@ -22,7 +22,7 @@
 ## English Listing
 
 Name:
-Exit Cue
+Exit Cue: Safe Timer
 
 Subtitle:
 Timed reminders for safe exits
@@ -31,13 +31,13 @@ Promotional text:
 Set a private call-style cue for uncomfortable social moments.
 
 Description:
-Exit Cue helps you create a discreet timed reminder when you may need a calm way to leave a date, meeting, or social situation.
+Exit Cue: Safe Timer helps you create a discreet timed reminder when you may need a calm way to leave a date, meeting, or social situation.
 
-Choose a caller profile, pick a delay, and start a local cue. When the timer fires, Exit Cue presents a call-inspired screen inside the app. You can answer, dismiss, mark yourself safe, or schedule a short follow-up.
+Choose a caller profile, pick a delay, and start a local cue. When the timer fires, Exit Cue: Safe Timer presents a call-inspired screen inside the app. You can answer, dismiss, mark yourself safe, or schedule a short follow-up.
 
 The app is local-first: no account, no backend, no analytics, no ads, and no tracking. Caller profiles, history, and preferences stay on your device.
 
-Exit Cue does not place or receive real phone calls, does not use CallKit, and does not impersonate the iOS Phone app.
+Exit Cue: Safe Timer does not place or receive real phone calls, does not use CallKit, and does not impersonate the iOS Phone app.
 
 Keywords:
 safety,reminder,exit,date,meeting,timer,local,private,call,cue
