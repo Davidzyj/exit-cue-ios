@@ -1,7 +1,7 @@
 import Foundation
 
 enum AppConstants {
-    static let appName = "Exit Cue"
+    static let appName = "Exit Cue: Safe Timer"
     static let bundleID = "com.zhouyajie.exitcue"
     static let version = "1.0.0"
     static let supportEmail = "jay212315@gmail.com"
