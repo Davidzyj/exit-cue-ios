@@ -9,7 +9,7 @@
 "common.edit" = "Edit";
 "common.delete" = "Delete";
 
-"home.navTitle" = "Exit Cue";
+"home.navTitle" = "Exit Cue: Safe Timer";
 "home.eyebrow" = "Safe exit";
 "home.title" = "A timed cue for leaving with calm.";
 "home.subtitle" = "Set a private call-inspired reminder for dates, meetings, and social moments that need a graceful exit.";
@@ -95,4 +95,3 @@
 "cue.script.close" = "End this cue when you are ready.";
 "cue.endSafe" = "End and mark safe";
 "cue.followup" = "Remind again in 5 min";
-
