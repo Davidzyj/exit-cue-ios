@@ -1,4 +1,4 @@
-# Exit Cue Progress Log
+# Exit Cue: Safe Timer Progress Log
 
 ## 2026-06-29
 
@@ -9,7 +9,7 @@
 
 ### Stage 2 - Native iOS project
 - Status: Completed
-- Goal: Create an iPhone-only SwiftUI app named Exit Cue with bundle ID `com.zhouyajie.exitcue`, version `1.0.0`, local storage, light-mode UI, and App Store encryption declaration.
+- Goal: Create an iPhone-only SwiftUI app named Exit Cue: Safe Timer with bundle ID `com.zhouyajie.exitcue`, version `1.0.0`, local storage, light-mode UI, and App Store encryption declaration.
 
 ### Stage 3 - Core features
 - Status: Completed
