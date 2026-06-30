@@ -26,10 +26,11 @@ Exit Cue: Safe Timer is a native SwiftUI iPhone app for local timed call-style s
 - Optional reminders use local notifications only after the user enables notifications.
 - UI is forced to light mode through `UIUserInterfaceStyle = Light` and `.preferredColorScheme(.light)`.
 - Text colors are explicit in the custom light theme.
+- Ring sound and vibration are controlled by Settings and can be muted for the current cue from the ringing screen. The loop stops on answer, dismiss, complete, cancel, or follow-up.
 
 ## Main files
 
-- `ExitCue/AppModel.swift`: scheduling, cue state, persistence, history, settings.
+- `ExitCue/AppModel.swift`: scheduling, cue state, persistence, history, settings, and `CueAlertLoop` for the custom ring/vibration rhythm.
 - `ExitCue/Models.swift`: app data models and language inference.
 - `ExitCue/BuiltInContent.swift`: built-in caller templates and Debug-only demo content.
 - `ExitCue/HomeView.swift`: start, active cue, caller and delay selection.

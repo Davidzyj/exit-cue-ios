@@ -15,11 +15,13 @@ final class AppModel: ObservableObject {
     @Published var isCuePresented = false
     @Published var now = Date()
     @Published var feedbackKey: LocalizedStringKey?
+    @Published var isCueAlertMuted = false
 
     let isDemoMode: Bool
 
     private let storage: AppStorageProviding
     private let notificationService: LocalNotificationService
+    private let cueAlertLoop = CueAlertLoop()
     private var timer: Timer?
 
     var effectiveLanguage: AppLanguage {
@@ -95,11 +97,13 @@ final class AppModel: ObservableObject {
     func setSoundEnabled(_ isEnabled: Bool) {
         settings.soundEnabled = isEnabled
         persistSettings()
+        refreshCueAlertLoop()
     }
 
     func setHapticsEnabled(_ isEnabled: Bool) {
         settings.hapticsEnabled = isEnabled
         persistSettings()
+        refreshCueAlertLoop()
     }
 
     func setNotificationsEnabled(_ isEnabled: Bool) async {
@@ -177,6 +181,7 @@ final class AppModel: ObservableObject {
         guard let cue = activeCue else {
             return
         }
+        stopCueAlertLoop()
         notificationService.cancel(cueID: cue.id)
         addHistory(for: cue, result: .cancelled)
         activeCue = nil
@@ -189,17 +194,20 @@ final class AppModel: ObservableObject {
         guard var cue = activeCue else {
             return
         }
+        stopCueAlertLoop()
         cue.state = .answered
         activeCue = cue
-        feedback()
+        confirmationFeedback()
         persistActiveCue()
     }
 
     func dismissCue() {
         guard let cue = activeCue else {
+            stopCueAlertLoop()
             isCuePresented = false
             return
         }
+        stopCueAlertLoop()
         addHistory(for: cue, result: .dismissed)
         notificationService.cancel(cueID: cue.id)
         activeCue = nil
@@ -210,9 +218,11 @@ final class AppModel: ObservableObject {
 
     func completeCue() {
         guard let cue = activeCue else {
+            stopCueAlertLoop()
             isCuePresented = false
             return
         }
+        stopCueAlertLoop()
         addHistory(for: cue, result: .completed)
         notificationService.cancel(cueID: cue.id)
         activeCue = nil
@@ -222,8 +232,14 @@ final class AppModel: ObservableObject {
     }
 
     func scheduleFollowUp(minutes: Int) {
+        stopCueAlertLoop()
         startCue(delaySeconds: max(1, minutes) * 60)
         isCuePresented = false
+    }
+
+    func toggleCueAlertMute() {
+        isCueAlertMuted.toggle()
+        refreshCueAlertLoop()
     }
 
     func addProfile(name: String, relationship: String, cueLine: String, accentHex: String) {
@@ -291,8 +307,9 @@ final class AppModel: ObservableObject {
     }
 
     private func presentCue() {
-        feedback()
+        isCueAlertMuted = false
         isCuePresented = true
+        refreshCueAlertLoop()
     }
 
     private func markActiveCueRinging() {
@@ -317,13 +334,23 @@ final class AppModel: ObservableObject {
         persistHistory()
     }
 
-    private func feedback() {
+    private func refreshCueAlertLoop() {
+        guard isCuePresented, activeCue?.state == .ringing, !isCueAlertMuted else {
+            cueAlertLoop.stop()
+            return
+        }
+        cueAlertLoop.start(soundEnabled: settings.soundEnabled, hapticsEnabled: settings.hapticsEnabled)
+    }
+
+    private func stopCueAlertLoop() {
+        cueAlertLoop.stop()
+        isCueAlertMuted = false
+    }
+
+    private func confirmationFeedback() {
         if settings.hapticsEnabled {
             let generator = UINotificationFeedbackGenerator()
             generator.notificationOccurred(.success)
-        }
-        if settings.soundEnabled {
-            AudioServicesPlaySystemSound(1007)
         }
     }
 
@@ -353,5 +380,148 @@ final class AppModel: ObservableObject {
             return
         }
         storage.saveSettings(settings)
+    }
+}
+
+@MainActor
+final class CueAlertLoop {
+    private var soundTimer: Timer?
+    private var hapticTimer: Timer?
+    private var soundID: SystemSoundID?
+
+    func start(soundEnabled: Bool, hapticsEnabled: Bool) {
+        stop()
+
+        if soundEnabled {
+            prepareSoundIfNeeded()
+            playSound()
+            soundTimer = Timer.scheduledTimer(withTimeInterval: 2.6, repeats: true) { [weak self] _ in
+                Task { @MainActor in
+                    self?.playSound()
+                }
+            }
+        }
+
+        if hapticsEnabled {
+            playHapticPulse()
+            hapticTimer = Timer.scheduledTimer(withTimeInterval: 1.3, repeats: true) { [weak self] _ in
+                Task { @MainActor in
+                    self?.playHapticPulse()
+                }
+            }
+        }
+    }
+
+    func stop() {
+        soundTimer?.invalidate()
+        soundTimer = nil
+        hapticTimer?.invalidate()
+        hapticTimer = nil
+    }
+
+    private func prepareSoundIfNeeded() {
+        guard soundID == nil, let url = ringToneURL() else {
+            return
+        }
+        var newSoundID: SystemSoundID = 0
+        let status = AudioServicesCreateSystemSoundID(url as CFURL, &newSoundID)
+        if status == kAudioServicesNoError {
+            soundID = newSoundID
+        }
+    }
+
+    private func playSound() {
+        guard let soundID else {
+            return
+        }
+        AudioServicesPlaySystemSound(soundID)
+    }
+
+    private func playHapticPulse() {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.warning)
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+    }
+
+    private func ringToneURL() -> URL? {
+        guard let cacheURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else {
+            return nil
+        }
+
+        let url = cacheURL.appendingPathComponent("exitcue-soft-ring.wav")
+        if FileManager.default.fileExists(atPath: url.path) {
+            return url
+        }
+
+        do {
+            try makeRingToneData().write(to: url, options: [.atomic])
+            return url
+        } catch {
+            return nil
+        }
+    }
+
+    private func makeRingToneData() -> Data {
+        let sampleRate = 44_100
+        let duration = 1.18
+        let frameCount = Int(Double(sampleRate) * duration)
+        var pcm = Data()
+        pcm.reserveCapacity(frameCount * 2)
+
+        for frame in 0..<frameCount {
+            let time = Double(frame) / Double(sampleRate)
+            let frequency: Double?
+
+            if time < 0.30 {
+                frequency = 880
+            } else if time < 0.43 {
+                frequency = nil
+            } else if time < 0.73 {
+                frequency = 660
+            } else {
+                frequency = nil
+            }
+
+            let sample: Int16
+            if let frequency {
+                let edgeFade = 0.018
+                let localTime = time < 0.30 ? time : time - 0.43
+                let toneDuration = time < 0.30 ? 0.30 : 0.30
+                let attack = min(1, localTime / edgeFade)
+                let release = min(1, max(0, (toneDuration - localTime) / edgeFade))
+                let envelope = max(0, min(attack, release))
+                let wave = sin(2 * Double.pi * frequency * time)
+                sample = Int16(max(-1, min(1, wave * envelope * 0.32)) * Double(Int16.max))
+            } else {
+                sample = 0
+            }
+            pcm.appendLittleEndian(sample)
+        }
+
+        var data = Data()
+        data.append("RIFF".data(using: .ascii)!)
+        data.appendLittleEndian(UInt32(36 + pcm.count))
+        data.append("WAVE".data(using: .ascii)!)
+        data.append("fmt ".data(using: .ascii)!)
+        data.appendLittleEndian(UInt32(16))
+        data.appendLittleEndian(UInt16(1))
+        data.appendLittleEndian(UInt16(1))
+        data.appendLittleEndian(UInt32(sampleRate))
+        data.appendLittleEndian(UInt32(sampleRate * 2))
+        data.appendLittleEndian(UInt16(2))
+        data.appendLittleEndian(UInt16(16))
+        data.append("data".data(using: .ascii)!)
+        data.appendLittleEndian(UInt32(pcm.count))
+        data.append(pcm)
+        return data
+    }
+}
+
+private extension Data {
+    mutating func appendLittleEndian<T: FixedWidthInteger>(_ value: T) {
+        var littleEndian = value.littleEndian
+        Swift.withUnsafeBytes(of: &littleEndian) { bytes in
+            append(contentsOf: bytes)
+        }
     }
 }

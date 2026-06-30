@@ -30,3 +30,8 @@
 - Status: Completed
 - Goal: Initialize git, create GitHub repository, configure GitHub Pages, and provide final handoff summary.
 - Notes: Local git repository initialized. Public GitHub repository created at `https://github.com/Davidzyj/exit-cue-ios`. GitHub Pages is configured from `main` branch `/docs`, and GitHub API reports status `built`. Local curl to `github.io` returned network code `000`, so public URL reachability should be rechecked from a browser or network outside this environment.
+
+### Stage 7 - Ring and vibration enhancement
+- Status: Completed
+- Goal: Add a stronger in-app ringing experience without using CallKit or the iOS system incoming call UI.
+- Notes: Added a custom generated ring pattern, repeated vibration rhythm, Settings labels for Ring sound/Vibration, and a per-cue Mute/Ring toggle on the ringing screen. The alert loop stops on answer, dismiss, complete, cancel, or follow-up.

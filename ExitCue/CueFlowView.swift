@@ -67,6 +67,23 @@ struct RingingCueView: View {
             }
             .padding(.horizontal, 8)
 
+            Button {
+                model.toggleCueAlertMute()
+            } label: {
+                Label {
+                    Text(LocalizedStringKey(model.isCueAlertMuted ? "cue.unmute" : "cue.mute"))
+                } icon: {
+                    Image(systemName: model.isCueAlertMuted ? "bell.fill" : "bell.slash.fill")
+                }
+                .font(.subheadline.weight(.bold))
+                .foregroundStyle(model.isCueAlertMuted ? ECTheme.teal : ECTheme.coral)
+                .padding(.horizontal, 14)
+                .padding(.vertical, 10)
+                .background(model.isCueAlertMuted ? ECTheme.softBlue : ECTheme.softCoral)
+                .clipShape(Capsule())
+            }
+            .buttonStyle(.plain)
+
             Spacer()
 
             HStack(spacing: 18) {

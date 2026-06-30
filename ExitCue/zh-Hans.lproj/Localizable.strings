@@ -78,8 +78,8 @@
 "settings.language.chinese" = "中文";
 "settings.language.japanese" = "日文";
 "settings.preferences" = "偏好";
-"settings.sound" = "声音";
-"settings.haptics" = "触感";
+"settings.sound" = "铃声";
+"settings.haptics" = "震动";
 "settings.notifications" = "通知";
 "settings.help" = "帮助";
 "settings.privacy" = "隐私政策";
@@ -90,9 +90,10 @@
 "cue.badge" = "离场提醒";
 "cue.dismiss" = "挂断";
 "cue.answer" = "接听";
+"cue.mute" = "静音";
+"cue.unmute" = "响铃";
 "cue.connected" = "已接通";
 "cue.script.followup" = "你可以慢慢来，现在可以离开。";
 "cue.script.close" = "准备好后结束这次提醒。";
 "cue.endSafe" = "结束并标记安全";
 "cue.followup" = "5 分钟后再次提醒";
-

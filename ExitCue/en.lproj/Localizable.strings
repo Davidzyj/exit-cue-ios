@@ -78,8 +78,8 @@
 "settings.language.chinese" = "Chinese";
 "settings.language.japanese" = "Japanese";
 "settings.preferences" = "Preferences";
-"settings.sound" = "Sound";
-"settings.haptics" = "Haptics";
+"settings.sound" = "Ring sound";
+"settings.haptics" = "Vibration";
 "settings.notifications" = "Notifications";
 "settings.help" = "Help";
 "settings.privacy" = "Privacy Policy";
@@ -90,6 +90,8 @@
 "cue.badge" = "Exit cue";
 "cue.dismiss" = "Dismiss";
 "cue.answer" = "Answer";
+"cue.mute" = "Mute";
+"cue.unmute" = "Ring";
 "cue.connected" = "Connected";
 "cue.script.followup" = "Take the time you need. You can step away now.";
 "cue.script.close" = "End this cue when you are ready.";

@@ -78,8 +78,8 @@
 "settings.language.chinese" = "中国語";
 "settings.language.japanese" = "日本語";
 "settings.preferences" = "環境設定";
-"settings.sound" = "サウンド";
-"settings.haptics" = "触覚";
+"settings.sound" = "着信音";
+"settings.haptics" = "振動";
 "settings.notifications" = "通知";
 "settings.help" = "ヘルプ";
 "settings.privacy" = "プライバシーポリシー";
@@ -90,9 +90,10 @@
 "cue.badge" = "退出の合図";
 "cue.dismiss" = "閉じる";
 "cue.answer" = "応答";
+"cue.mute" = "消音";
+"cue.unmute" = "鳴らす";
 "cue.connected" = "接続中";
 "cue.script.followup" = "必要な時間を取ってください。今、離れて大丈夫です。";
 "cue.script.close" = "準備できたらこの合図を終了してください。";
 "cue.endSafe" = "終了して安全を記録";
 "cue.followup" = "5分後に再通知";
-

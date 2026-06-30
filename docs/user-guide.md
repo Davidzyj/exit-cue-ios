@@ -25,6 +25,8 @@ Tap Now on Home to present the cue immediately.
 - End and mark safe records the cue as completed.
 - Dismiss records the cue as dismissed.
 - Cancel on Home stops an active cue and records it as canceled.
+- The ringing screen plays a custom in-app ring pattern and vibration rhythm when Ring sound and Vibration are enabled.
+- Tap Mute on the ringing screen to silence the current cue without changing global settings.
 
 ## Caller profiles
 
@@ -44,8 +46,8 @@ History shows recent completed, dismissed, and canceled cues. Users can clear hi
 
 Settings includes:
 - Language: System, English, Simplified Chinese, Japanese
-- Sound
-- Haptics
+- Ring sound
+- Vibration
 - Optional local notifications
 - Privacy Policy link
 - Support link

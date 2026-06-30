@@ -27,6 +27,14 @@
    - Expected: Active cue clears and History shows canceled.
 6. Schedule a follow-up from the conversation screen.
    - Expected: Cue closes and Home shows a new active 5-minute countdown.
+7. Trigger a cue with Ring sound and Vibration enabled.
+   - Expected: The ringing screen starts a repeating custom ring pattern and vibration rhythm.
+8. Tap Mute on the ringing screen.
+   - Expected: The current cue stops ringing/vibrating, and the button changes to Ring.
+9. Tap Ring after muting.
+   - Expected: The current cue resumes the ring/vibration pattern according to Settings.
+10. Answer, dismiss, complete, cancel, or schedule follow-up.
+   - Expected: Ring sound and vibration stop immediately.
 
 ## Caller management
 
